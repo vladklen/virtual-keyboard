@@ -1,18 +1,23 @@
-import image from './images/lazy.png';
-
-const createImage = (src) => new Promise((res, rej) => {
-  const img = new Image();
-  img.onload = () => res(img);
-  img.onerror = rej;
-  img.src = src;
-});
+import { CreateKeyboard } from "./js/CreateKeyboard ";
+import { enKeys, rusKeys } from "./js/keys";
 
 async function render() {
-  const subHeader = document.createElement('h2');
-  subHeader.innerHTML = 'This elements was created by js';
-  const myImage = await createImage(image);
-  document.body.appendChild(subHeader);
-  document.body.appendChild(myImage);
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("keyboard", "wrapper");
+  const textArea = document.createElement("textarea");
+  textArea.classList.add("keyboard__input");
+  const keyBoard = document.createElement("div");
+  keyBoard.classList.add("keyboard__controls");
+
+  textArea.value = "This elements was created by js";
+
+  console.log(wrapper);
+  document.body.appendChild(wrapper);
+  wrapper.appendChild(textArea);
+  wrapper.appendChild(keyBoard);
+
+  const getKeys = new CreateKeyboard(enKeys, rusKeys);
+  getKeys.init();
 }
 
 render();
