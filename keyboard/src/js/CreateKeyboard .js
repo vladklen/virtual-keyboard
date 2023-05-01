@@ -118,7 +118,6 @@ export class CreateKeyboard {
   }
 
   changeInput(code) {
-    console.log(code);
     const input = document.querySelector(".keyboard__input");
     let text = input.value;
     input.selectionEnd = this.inputPosition;
@@ -172,6 +171,8 @@ export class CreateKeyboard {
                 } else {
                   symbol = element.key;
                 }
+              } else {
+                symbol = element.keyCaps;
               }
             } else {
               if (this.shiftActive === 1) {
