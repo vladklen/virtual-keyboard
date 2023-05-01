@@ -2,14 +2,13 @@ import { Key } from "./Key";
 
 export class CreateKeyboard {
   constructor(en, rus) {
-    this.language = localStorage.len ? localStorage.len : "ru";
+    this.language = localStorage.lang ? localStorage.lang : "ru";
     this.rusKeyboard = rus;
     this.engKeyboard = en;
     this.capsActive = 0;
     this.shiftActive = 0;
     this.inputPosition = 0;
     this.keyBoard = document.querySelector(".keyboard__controls");
-    this.newKeyBoard = [];
   }
 
   init() {
@@ -27,17 +26,19 @@ export class CreateKeyboard {
 
   keyBoardHandlers() {
     document.addEventListener("keydown", (event) => {
-      this.newKeyBoard.push({ key: event.key, code: event.code, keyCaps: "" });
-      console.log(this.newKeyBoard);
       event.preventDefault();
+
       document.querySelectorAll(".key").forEach((el) => {
         if (event.code === el.getAttribute("data-key")) {
           el.classList.add("active");
         }
       });
+      if (this.shiftActive === 1 && event.key === "Control") {
+        this.changeLanguage();
+      }
       if (event.key === "Shift") {
         this.shiftEvent();
-      } else if (event.key === "CapsLock") {
+      } else if (event.key === "CapsLock" && !this.capsActive) {
         this.capsEvent();
       } else {
         this.changeInput(event.code);
@@ -52,7 +53,7 @@ export class CreateKeyboard {
       });
       if (event.key === "Shift") {
         this.shiftEvent();
-      } else if (event.key === "CapsLock") {
+      } else if (event.key === "CapsLock" && this.capsActive) {
         this.capsEvent();
       }
     });
@@ -69,6 +70,16 @@ export class CreateKeyboard {
         event.target.classList.remove("active");
       });
     });
+  }
+
+  changeLanguage() {
+    if (this.language === "ru") {
+      this.language = "en";
+      localStorage.setItem("lang", "en");
+    } else {
+      this.language = "ru";
+      localStorage.setItem("lang", "ru");
+    }
   }
 
   shiftEvent() {
@@ -149,7 +160,7 @@ export class CreateKeyboard {
             symbol = ``;
             this.inputPosition -= 1;
           } else {
-            this.shiftActive === 1 || this.capsActive === 1
+            this.shiftActive !== this.capsActive
               ? (symbol = element.keyCaps)
               : (symbol = element.key);
           }

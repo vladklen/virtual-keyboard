@@ -11,6 +11,9 @@ export class Key {
     if (this.key.key === "Backspace") {
       button.innerHTML = `&#8656`;
       button.classList.add("big");
+    } else if (this.key.code === "CapsLock" && this.caps) {
+      button.classList.add("active", "big");
+      button.innerHTML = this.key.key;
     } else if (
       this.key.code === "Delete" ||
       this.key.code === "CapsLock" ||
@@ -44,6 +47,7 @@ export class Key {
       this.shift === this.caps
         ? button.classList.add("low")
         : button.classList.add("upp");
+      console.log(this.shift, this.caps);
       this.shift === this.caps
         ? (button.innerHTML = this.key.key)
         : (button.innerHTML = this.key.keyCaps);
