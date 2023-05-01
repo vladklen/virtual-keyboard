@@ -35,11 +35,11 @@ export class CreateKeyboard {
       if (this.shiftActive === 1 && event.key === "Control") {
         this.changeLanguage();
       }
-      if (event.key === "Shift") {
+      if (event.key === "Shift" && !this.shiftActive) {
         this.shiftEvent();
-      } else if (event.key === "CapsLock" && !this.capsActive) {
+      } else if (event.key === "CapsLock") {
         this.capsEvent();
-      } else {
+      } else if (event.key !== "Shift" && event.key !== "CapsLock") {
         this.changeInput(event.code);
       }
     });
@@ -47,13 +47,13 @@ export class CreateKeyboard {
       event.preventDefault();
       document.querySelectorAll(".key").forEach((el) => {
         if (event.code === el.getAttribute("data-key")) {
-          el.classList.remove("active");
+          if (event.code !== "CapsLock") {
+            el.classList.remove("active");
+          }
         }
       });
       if (event.key === "Shift") {
         this.shiftEvent();
-      } else if (event.key === "CapsLock" && this.capsActive) {
-        this.capsEvent();
       }
     });
   }
@@ -62,8 +62,6 @@ export class CreateKeyboard {
     const keys = document.querySelectorAll(".key");
     keys.forEach((el) => {
       el.addEventListener("mousedown", (event) => {
-        console.log(event);
-        console.log(event.target.getAttribute("data-key"));
         if (
           event.target.getAttribute("data-key") === "ShiftLeft" ||
           event.target.getAttribute("data-key") === "ShiftRight"
@@ -166,7 +164,17 @@ export class CreateKeyboard {
           } else {
             if (this.shiftActive !== this.capsActive) {
               if (this.capsActive) {
-                if (code.substring(0, 3) === "Key") {
+                if (
+                  code.substring(0, 3) === "Key" ||
+                  code === "Comma" ||
+                  code === "Period" ||
+                  code === "Period" ||
+                  code === "Semicolon" ||
+                  code === "Quote" ||
+                  code === "Backslash" ||
+                  code === "BracketLeft" ||
+                  code === "BracketRight"
+                ) {
                   symbol = element.keyCaps;
                 } else {
                   symbol = element.key;
@@ -176,7 +184,17 @@ export class CreateKeyboard {
               }
             } else {
               if (this.shiftActive === 1) {
-                if (code.substring(0, 3) === "Key") {
+                if (
+                  code.substring(0, 3) === "Key" ||
+                  code === "Comma" ||
+                  code === "Period" ||
+                  code === "Period" ||
+                  code === "Semicolon" ||
+                  code === "Quote" ||
+                  code === "Backslash" ||
+                  code === "BracketLeft" ||
+                  code === "BracketRight"
+                ) {
                   symbol = element.key;
                 } else {
                   symbol = element.keyCaps;

@@ -12,7 +12,7 @@ export class Key {
     if (this.key.key === "Backspace") {
       button.innerHTML = `&#8656`;
       button.classList.add("big");
-    } else if (this.key.code === "CapsLock" && this.caps) {
+    } else if (this.key.code === "CapsLock" && this.caps === 1) {
       button.classList.add("active", "big");
       button.innerHTML = this.key.key;
     } else if (
@@ -55,7 +55,17 @@ export class Key {
     } else {
       if (this.shift === this.caps) {
         if (this.caps === 1) {
-          if (this.key.code.substring(0, 3) === "Key") {
+          if (
+            this.key.code.substring(0, 3) === "Key" ||
+            this.key.code === "Comma" ||
+            this.key.code === "Period" ||
+            this.key.code === "Period" ||
+            this.key.code === "Semicolon" ||
+            this.key.code === "Quote" ||
+            this.key.code === "Backslash" ||
+            this.key.code === "BracketLeft" ||
+            this.key.code === "BracketRight"
+          ) {
             button.innerHTML = this.key.key;
             button.classList.add("low");
           } else {
@@ -69,7 +79,17 @@ export class Key {
       } else {
         button.classList.add("upp");
         if (this.caps) {
-          if (this.key.code.substring(0, 3) === "Key") {
+          if (
+            this.key.code.substring(0, 3) === "Key" ||
+            this.key.code === "Comma" ||
+            this.key.code === "Period" ||
+            this.key.code === "Period" ||
+            this.key.code === "Semicolon" ||
+            this.key.code === "Quote" ||
+            this.key.code === "Backslash" ||
+            this.key.code === "BracketLeft" ||
+            this.key.code === "BracketRight"
+          ) {
             button.innerHTML = this.key.keyCaps;
           } else {
             button.innerHTML = this.key.key;
