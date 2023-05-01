@@ -37,7 +37,7 @@ export class CreateKeyboard {
       }
       if (event.key === "Shift" && !this.shiftActive) {
         this.shiftEvent();
-      } else if (event.key === "CapsLock") {
+      } else if (event.key === "CapsLock" && !this.capsActive) {
         this.capsEvent();
       } else if (event.key !== "Shift" && event.key !== "CapsLock") {
         this.changeInput(event.code);
@@ -49,6 +49,10 @@ export class CreateKeyboard {
         if (event.code === el.getAttribute("data-key")) {
           if (event.code !== "CapsLock") {
             el.classList.remove("active");
+          } else if (!event.getModifierState("CapsLock")) {
+            console.log("тут");
+            el.classList.remove("active");
+            this.capsEvent();
           }
         }
       });
