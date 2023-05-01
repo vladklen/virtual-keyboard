@@ -11,8 +11,17 @@ body {
 
 h1 {
   color: #e6c300;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+span {
+  color: red;
+}
 img {
   width: 90vw;
   max-width: 256px;
@@ -24,9 +33,16 @@ img {
 }
 
 .keyboard__input {
+  box-sizing: border-box;
   width: 100%;
-  height: 200px;
+  height: 400px;
   margin: 0px 0px 30px 0px;
+  font-family: "Inconsolata", monospace;
+  font-size: 1.5rem;
+  background-color: #0b00a8;
+  color: #a8a8a8;
+  padding: 1.25rem 1rem;
+  box-shadow: inset 0 0 0 7px #0b00a8, inset 0 0 0 9px currentcolor;
 }
 
 .keyboard__controls {

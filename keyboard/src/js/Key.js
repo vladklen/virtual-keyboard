@@ -8,6 +8,7 @@ export class Key {
   createKey() {
     const button = document.createElement("div");
     button.setAttribute("data-key", this.key.code);
+
     if (this.key.key === "Backspace") {
       button.innerHTML = `&#8656`;
       button.classList.add("big");
@@ -15,10 +16,20 @@ export class Key {
       button.classList.add("active", "big");
       button.innerHTML = this.key.key;
     } else if (
+      this.key.code === "ShiftLeft" ||
+      this.key.code === "ShiftRight"
+    ) {
+      button.innerHTML = "Shift";
+      if (this.key.code === "ShiftLeft") {
+        button.classList.add("big");
+      }
+      if (this.shift) {
+        button.classList.add("active");
+      }
+    } else if (
       this.key.code === "Delete" ||
       this.key.code === "CapsLock" ||
       this.key.code === "Enter" ||
-      this.key.code === "ShiftLeft" ||
       this.key.code === "AltLeft" ||
       this.key.code === "AltRight"
     ) {
@@ -37,20 +48,36 @@ export class Key {
       button.innerHTML = `←`;
     } else if (this.key.key === "ArrowRight") {
       button.innerHTML = `→`;
-    } else if (this.key.code === "ShiftRight") {
-      button.innerHTML = `Shift`;
     } else if (this.key.key === "Meta") {
       button.innerHTML = `Cmd`;
     } else if (this.key.code === "Tab") {
       button.innerHTML = "Tab";
     } else {
-      this.shift === this.caps
-        ? button.classList.add("low")
-        : button.classList.add("upp");
-      console.log(this.shift, this.caps);
-      this.shift === this.caps
-        ? (button.innerHTML = this.key.key)
-        : (button.innerHTML = this.key.keyCaps);
+      if (this.shift === this.caps) {
+        if (this.caps === 1) {
+          if (this.key.code.substring(0, 3) === "Key") {
+            button.innerHTML = this.key.key;
+            button.classList.add("low");
+          } else {
+            button.innerHTML = this.key.keyCaps;
+            button.classList.add("upp");
+          }
+        } else {
+          button.classList.add("low");
+          button.innerHTML = this.key.key;
+        }
+      } else {
+        button.classList.add("upp");
+        if (this.caps) {
+          if (this.key.code.substring(0, 3) === "Key") {
+            button.innerHTML = this.key.keyCaps;
+          } else {
+            button.innerHTML = this.key.key;
+          }
+        } else {
+          button.innerHTML = this.key.keyCaps;
+        }
+      }
     }
     return button;
   }

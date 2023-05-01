@@ -8,10 +8,15 @@ async function render() {
   textArea.classList.add("keyboard__input");
   const keyBoard = document.createElement("div");
   keyBoard.classList.add("keyboard__controls");
+  const info = document.createElement("div");
+  info.classList.add("keyboard__info");
+  info.innerHTML = `<h1>Клавиатура создана в операционной системе MacOS </h1>
+	<h2>Для переключения языка комбинация: <span>Shift+Ctrl</span> </h2>`;
 
   document.body.appendChild(wrapper);
   wrapper.appendChild(textArea);
   wrapper.appendChild(keyBoard);
+  wrapper.appendChild(info);
 
   textArea.addEventListener("click", () => {
     getKeys.inputPosition = textArea.selectionStart;

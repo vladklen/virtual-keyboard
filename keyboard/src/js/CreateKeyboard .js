@@ -27,7 +27,6 @@ export class CreateKeyboard {
   keyBoardHandlers() {
     document.addEventListener("keydown", (event) => {
       event.preventDefault();
-
       document.querySelectorAll(".key").forEach((el) => {
         if (event.code === el.getAttribute("data-key")) {
           el.classList.add("active");
@@ -63,11 +62,29 @@ export class CreateKeyboard {
     const keys = document.querySelectorAll(".key");
     keys.forEach((el) => {
       el.addEventListener("mousedown", (event) => {
-        event.target.classList.add("active");
-        this.changeInput(event.target.getAttribute("data-key"));
+        console.log(event);
+        console.log(event.target.getAttribute("data-key"));
+        if (
+          event.target.getAttribute("data-key") === "ShiftLeft" ||
+          event.target.getAttribute("data-key") === "ShiftRight"
+        ) {
+          this.shiftEvent();
+        } else if (event.target.getAttribute("data-key") === "CapsLock") {
+          this.capsEvent();
+        } else {
+          event.target.classList.add("active");
+          this.changeInput(event.target.getAttribute("data-key"));
+        }
       });
       el.addEventListener("mouseup", (event) => {
-        event.target.classList.remove("active");
+        if (
+          event.target.getAttribute("data-key") === "ShiftLeft" ||
+          event.target.getAttribute("data-key") === "ShiftRight"
+        ) {
+          this.shiftEvent();
+        } else if (event.target.getAttribute("data-key") !== "CapsLock") {
+          event.target.classList.remove("active");
+        }
       });
     });
   }
@@ -89,14 +106,6 @@ export class CreateKeyboard {
       this.shiftActive = 0;
     }
     this.init();
-    if (this.shiftActive) {
-      document
-        .querySelector(".key[data-key=ShiftLeft]")
-        .classList.add("active");
-      document
-        .querySelector(".key[data-key=ShiftRight]")
-        .classList.add("active");
-    }
   }
 
   capsEvent() {
@@ -106,17 +115,13 @@ export class CreateKeyboard {
       this.capsActive = 0;
     }
     this.init();
-    if (this.capsActive) {
-      document.querySelector(".key[data-key=CapsLock]").classList.add("active");
-    }
   }
 
   changeInput(code) {
+    console.log(code);
     const input = document.querySelector(".keyboard__input");
-
     let text = input.value;
     input.selectionEnd = this.inputPosition;
-
     let symbol;
     const newKeyBoard =
       this.language === "ru" ? this.rusKeyboard : this.engKeyboard;
@@ -160,9 +165,25 @@ export class CreateKeyboard {
             symbol = ``;
             this.inputPosition -= 1;
           } else {
-            this.shiftActive !== this.capsActive
-              ? (symbol = element.keyCaps)
-              : (symbol = element.key);
+            if (this.shiftActive !== this.capsActive) {
+              if (this.capsActive) {
+                if (code.substring(0, 3) === "Key") {
+                  symbol = element.keyCaps;
+                } else {
+                  symbol = element.key;
+                }
+              }
+            } else {
+              if (this.shiftActive === 1) {
+                if (code.substring(0, 3) === "Key") {
+                  symbol = element.key;
+                } else {
+                  symbol = element.keyCaps;
+                }
+              } else {
+                symbol = element.key;
+              }
+            }
           }
           input.value =
             text.slice(0, this.inputPosition) +
