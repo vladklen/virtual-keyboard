@@ -19,7 +19,8 @@ img {
 }
 
 .wrapper {
-  max-width: 900px;
+  max-width: 944px;
+  box-sizing: border-box;
 }
 
 .keyboard__input {
@@ -29,10 +30,21 @@ img {
 }
 
 .keyboard__controls {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 13px;
+  gap: 10px;
+  border-radius: 4px;
+  border: 13px solid #777;
+  border-top-color: #666;
+  border-bottom-color: #888;
+  outline: 3px solid rgba(0, 0, 0, 0.2);
+  outline-offset: -1px;
+  box-shadow: inset 0 1rem 1rem rgba(0, 0, 0, 0.5),
+    0 2rem 3rem -0.5rem rgba(0, 0, 0, 0.55);
+  background-image: radial-gradient(#111, #222);
+  padding: 0.25rem;
 }
 
 .key.big {
@@ -40,12 +52,18 @@ img {
 }
 
 .key.space {
-  padding: 0px 130px;
+  padding: 0px 142px;
+}
+.key.upp {
+  text-transform: uppercase;
+}
+.key.low {
+  text-transform: lowercase;
 }
 
 .key {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   display: flex;
   border-radius: 3px;
   box-sizing: border-box;
@@ -55,9 +73,6 @@ img {
   font-weight: 400;
   line-height: 1.125;
   padding: 0.33em 0.66em;
-  position: relative;
-  text-align: center;
-  vertical-align: middle;
   border: 3px solid transparent;
   border-top: 2px solid transparent;
   border-bottom: 6px solid transparent;
@@ -71,4 +86,8 @@ img {
   outline: 0;
   align-items: center;
   justify-content: center;
+}
+
+.key.active {
+  transform: scale(0.96, 0.96) translate(0, 3px);
 }

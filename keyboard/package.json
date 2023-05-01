@@ -4,6 +4,8 @@
   "private": true,
   "name": "keyboard",
   "scripts": {
+    "lint": "npx eslint ./src",
+    "lint-fix": "npx eslint ./src --fix",
     "start": "rss-scripts start",
     "build": "rss-scripts build"
   },
